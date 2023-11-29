@@ -12,7 +12,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::withTrashed()->latest()->paginate(10);
+        $categories = Category::withTrashed()->latest()->paginate(5);
         return view('admin.category.category', compact('categories'));
     }
     public function store(Request $request)
