@@ -59,11 +59,11 @@
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Category Name</th>
-                    <th scope="col">Image</th>
+                    <th scope="col">Category Image</th>
                     <th scope="col">User ID</th>
                     <th scope="col">Created At</th>
                     <th scope="col">Deleted At</th>
-                    <th scope="col">Actions</th> <!-- New column for actions -->
+                    <th scope="col">Actions</th> 
                 </tr>
             </thead>
             <tbody>
@@ -91,8 +91,7 @@
                                     @method('PUT')
                                     <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to restore this category?')">Restore</button>
                                 </form>
-                                
-                                <!-- Permanent Delete Form -->
+
                                 <form method="POST" action="{{ route('forceDelete.category', ['id' => $category->id]) }}" class="d-inline">
                                     @csrf
                                     @method('DELETE')
@@ -106,13 +105,13 @@
     </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="card">
+                        <div class="card" style="padding:15px;">
                             <form method="POST" action="{{ route('AllCat') }}" enctype="multipart/form-data">
                                 @csrf 
                                 <div class="mb-3">
                                     <label for="category_name" class="form-label">Category Name</label>
                                     <input type="text" class="form-control" name="category_name" required>
-                                    <input type="file" name="image" required>
+                                    <input type="file" name="image" required style="padding-top:5px;">
                                     @error('image')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror

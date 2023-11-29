@@ -19,7 +19,7 @@ class Category extends Model
         'image'
     ];
     protected $casts = [
-        'image' => 'string', // Make sure the image attribute is cast to the appropriate type
+        'image' => 'string', 
     ];
 
     public function user(){

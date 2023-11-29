@@ -19,7 +19,7 @@
 
                             <form method="POST" action="{{ route('update.category', ['id' => $category->id]) }}" enctype="multipart/form-data">
                                 @csrf 
-                                @method('PUT') <!-- Use 'PUT' method for updates -->
+                                @method('PUT')
 
                                 <div class="mb-3">
                                     <label for="category_name" class="form-label">Category Name</label>

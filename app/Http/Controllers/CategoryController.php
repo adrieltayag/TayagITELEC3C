@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -17,7 +19,7 @@ class CategoryController extends Controller
     {
         $request->validate([
             'category_name' => 'required|string|max:255',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:6114', 
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:6114',
         ]);
         $category = new Category();
         $category->category_name = $request->input('category_name');
@@ -25,17 +27,14 @@ class CategoryController extends Controller
     
         // Handle image upload
         if ($request->hasFile('image')) {
-            // Store the image in the public/image directory
-            $imagePath = $request->file('image')->storeAs('public/image', $category->id . '.' . $request->file('image')->extension());
-            
-            // Update the category's image field with the filename
+            $imageName = Str::random(10) . '.' . $request->file('image')->extension();
+            $imagePath = $request->file('image')->storeAs('public/image', $imageName);
             $category->image = basename($imagePath);
         }
     
         $category->save();
     
         return redirect()->route('AllCat');
-    
     }
 
     public function UpdateCat($id)
@@ -50,7 +49,7 @@ class CategoryController extends Controller
     
         if ($category) {
             $category->delete(); // Soft delete
-            return redirect()->route('AllCat')->with('status', 'Category moved to soft-deleted list.');
+            return redirect()->route('AllCat')->with('status', 'Category deleted.');
         } else {
             return redirect()->route('AllCat')->with('status', 'Category not found.');
         }
