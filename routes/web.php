@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UpdateController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 /*
@@ -30,11 +31,16 @@ Route::middleware([
     })->name('dashboard');
 });
 
-/* Route::get('/category',function(){
-    return view('admin.category.category');
-})->name('AllCat'); */
 
 //Category Routes
-Route::get('/all/category',[CategoryController::class,'index'])->name('AllCat');
 Route::get('/categories', [CategoryController::class, 'index'])->name('AllCat');
 Route::post('/categories', [CategoryController::class, 'store'])->name('AllCat');
+
+Route::get('/categories/{id}/update', [UpdateController::class, 'showUpdateForm'])->name('update.page');
+Route::put('/categories/{id}/update', [UpdateController::class, 'update'])->name('update.category');
+
+Route::get('/categories/{id}/soft-delete', [CategoryController::class, 'softDelete'])->name('softDelete.category');
+
+Route::put('/categories/{id}/restore', [CategoryController::class, 'restore'])->name('restore.category');
+Route::delete('/categories/{id}/force-delete', [CategoryController::class, 'forceDelete'])->name('forceDelete.category');
+
